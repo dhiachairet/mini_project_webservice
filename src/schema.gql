@@ -1,0 +1,78 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: ID!
+  email: String!
+  role: Role!
+  createdAt: DateTime!
+}
+
+enum Role {
+  ADMIN
+  OPERATOR
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+type GpsPosition {
+  id: ID!
+  latitude: Float!
+  longitude: Float!
+  recordedAt: DateTime!
+}
+
+type Vehicle {
+  id: ID!
+  licensePlate: String!
+  brand: String!
+  model: String!
+  driver: String
+  positions: [GpsPosition!]!
+}
+
+type Query {
+  vehicles: [Vehicle!]!
+  vehicle(id: Float!): Vehicle!
+  vehicleHistory(vehicleId: Float!): [GpsPosition!]!
+}
+
+type Mutation {
+  register(input: RegisterInput!): AuthPayload!
+  login(input: LoginInput!): AuthPayload!
+  addVehicle(input: CreateVehicleInput!): Vehicle!
+  recordGpsPosition(input: RecordGpsInput!): GpsPosition!
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+  role: Role
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input CreateVehicleInput {
+  licensePlate: String!
+  brand: String!
+  model: String!
+  driver: String
+}
+
+input RecordGpsInput {
+  vehicleId: Float!
+  latitude: Float!
+  longitude: Float!
+}
