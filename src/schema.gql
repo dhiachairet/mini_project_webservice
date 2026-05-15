@@ -40,10 +40,24 @@ type Vehicle {
   positions: [GpsPosition!]!
 }
 
+type Zone {
+  id: ID!
+  name: String!
+  northEastLat: Float!
+  northEastLng: Float!
+  southWestLat: Float!
+  southWestLng: Float!
+  currentDensity: String!
+  createdAt: DateTime!
+}
+
 type Query {
   vehicles: [Vehicle!]!
   vehicle(id: Float!): Vehicle!
   vehicleHistory(vehicleId: Float!): [GpsPosition!]!
+  zones: [Zone!]!
+  zone(id: Float!): Zone!
+  congestedZones: [Zone!]!
 }
 
 type Mutation {
@@ -51,6 +65,8 @@ type Mutation {
   login(input: LoginInput!): AuthPayload!
   addVehicle(input: CreateVehicleInput!): Vehicle!
   recordGpsPosition(input: RecordGpsInput!): GpsPosition!
+  createZone(input: CreateZoneInput!): Zone!
+  measureDensity(zoneId: Float!): Zone!
 }
 
 input RegisterInput {
@@ -75,4 +91,12 @@ input RecordGpsInput {
   vehicleId: Float!
   latitude: Float!
   longitude: Float!
+}
+
+input CreateZoneInput {
+  name: String!
+  northEastLat: Float!
+  northEastLng: Float!
+  southWestLat: Float!
+  southWestLng: Float!
 }
