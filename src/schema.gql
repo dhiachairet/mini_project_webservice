@@ -51,6 +51,29 @@ type Zone {
   createdAt: DateTime!
 }
 
+type Incident {
+  id: ID!
+  type: IncidentType!
+  status: IncidentStatus!
+  description: String!
+  location: String!
+  reportedAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum IncidentType {
+  ACCIDENT
+  TRAVAUX
+  ROUTE_FERMEE
+  EMBOUTEILLAGE
+}
+
+enum IncidentStatus {
+  SIGNALE
+  EN_COURS
+  RESOLU
+}
+
 type Query {
   vehicles: [Vehicle!]!
   vehicle(id: Float!): Vehicle!
@@ -58,6 +81,8 @@ type Query {
   zones: [Zone!]!
   zone(id: Float!): Zone!
   congestedZones: [Zone!]!
+  incidents: [Incident!]!
+  incident(id: Int!): Incident!
 }
 
 type Mutation {
@@ -67,6 +92,8 @@ type Mutation {
   recordGpsPosition(input: RecordGpsInput!): GpsPosition!
   createZone(input: CreateZoneInput!): Zone!
   measureDensity(zoneId: Float!): Zone!
+  declareIncident(input: DeclareIncidentInput!): Incident!
+  updateIncidentStatus(input: UpdateIncidentStatusInput!): Incident!
 }
 
 input RegisterInput {
@@ -99,4 +126,15 @@ input CreateZoneInput {
   northEastLng: Float!
   southWestLat: Float!
   southWestLng: Float!
+}
+
+input DeclareIncidentInput {
+  type: IncidentType!
+  description: String!
+  location: String!
+}
+
+input UpdateIncidentStatusInput {
+  id: Int!
+  status: IncidentStatus!
 }
