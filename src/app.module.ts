@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { NotificationsModule } from './notifications/notifications.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
@@ -29,6 +30,7 @@ import { IncidentsModule } from './incidents/incidents.module';
     VehiclesModule,
     TrafficModule,
     IncidentsModule,
+    NotificationsModule,
   ],
 })
 export class AppModule {}
